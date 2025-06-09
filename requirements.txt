@@ -1,0 +1,45 @@
+# Core Dependencies
+google-cloud-functions-framework==3.5.0
+google-cloud-firestore==2.13.1
+google-cloud-logging==3.8.0
+
+# Twilio SMS Integration
+twilio==8.10.0
+
+# LangChain AI Agent Framework
+langchain==0.1.0
+langchain-openai==0.0.2
+langchain-anthropic==0.1.0
+langchain-community==0.0.10
+
+# HTTP and Web Framework
+flask==3.0.0
+requests==2.31.0
+
+# Environment and Configuration
+python-dotenv==1.0.0
+pydantic==2.5.0
+pydantic-settings==2.1.0
+
+# Utilities and Tools
+python-dateutil==2.8.2
+pytz==2023.3
+validators==0.22.0
+
+# External API Tools
+openweathermap-api==1.1.0
+googlesearch-python==1.2.3
+
+# Security and Cryptography
+cryptography==41.0.8
+python-jose==3.3.0
+
+# Development and Testing
+pytest==7.4.3
+pytest-asyncio==0.21.1
+black==23.11.0
+flake8==6.1.0
+mypy==1.7.1
+
+# Monitoring and Logging
+structlog==23.2.0 
