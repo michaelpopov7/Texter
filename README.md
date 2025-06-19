@@ -1,8 +1,19 @@
-# SMS AI Agent
+# Texter - SMS AI Agent
 
-A production-ready SMS AI agent that allows users to text a dedicated phone number and receive intelligent responses powered by LangChain and deployed on Google Cloud Functions.
+Texter is a production-ready SMS AI agent that allows users to text a dedicated phone number and receive intelligent responses. Built with LangChain and deployed on Google Cloud Functions, it provides a conversational AI experience through SMS messaging.
 
-## 🚀 Features
+## Project Summary
+
+Texter bridges the gap between AI capabilities and everyday communication by making AI accessible through SMS - no app downloads or internet required. Users simply text a phone number and get instant AI assistance with weather updates, calculations, web search, and general questions. The system maintains conversation context, handles security validation, and scales automatically to serve multiple users simultaneously.
+
+**Key Technologies:**
+- **Backend**: Python, LangChain, Google Cloud Functions
+- **Database**: Google Firestore for conversation memory
+- **SMS Provider**: Twilio for message handling
+- **AI Models**: OpenAI GPT or Anthropic Claude
+- **Security**: Webhook validation, rate limiting, input sanitization
+
+## Features
 
 - **SMS Interface**: Users text a phone number to interact with the AI
 - **Conversation Memory**: Maintains context across SMS sessions using Firestore
@@ -13,7 +24,7 @@ A production-ready SMS AI agent that allows users to text a dedicated phone numb
 - **Scalable**: Auto-scaling Google Cloud Functions deployment
 - **Production Ready**: Comprehensive error handling, logging, and monitoring
 
-## 📋 Prerequisites
+## Prerequisites
 
 - Python 3.11+
 - Google Cloud Platform account
@@ -21,13 +32,13 @@ A production-ready SMS AI agent that allows users to text a dedicated phone numb
 - OpenAI or Anthropic API key
 - (Optional) OpenWeatherMap API key for weather features
 
-## 🛠️ Quick Setup
+## 🛠️ Setup Instructions
 
 ### 1. Clone and Install Dependencies
 
 ```bash
-git clone <repository-url>
-cd sms-ai-agent
+git clone https://github.com/yourusername/Texter.git
+cd Texter
 pip install -r requirements.txt
 ```
 
@@ -69,6 +80,13 @@ gcloud firestore databases create --region=us-central1
 
 ### 4. Deploy to Google Cloud Functions
 
+**Option A: Using the automated deployment script (recommended)**
+```bash
+chmod +x scripts/deploy.sh
+./scripts/deploy.sh
+```
+
+**Option B: Manual deployment**
 ```bash
 # Deploy the function
 gcloud functions deploy sms-ai-agent \
@@ -93,7 +111,7 @@ gcloud functions describe sms-ai-agent --format="value(httpsTrigger.url)"
 5. Set HTTP method to POST
 6. Save configuration
 
-## 🏗️ Architecture
+## Architecture
 
 ```
 User SMS → Twilio → Google Cloud Function → LangChain Agent → Response
@@ -113,7 +131,7 @@ User SMS → Twilio → Google Cloud Function → LangChain Agent → Response
 - **src/security.py**: Security and validation
 - **src/config.py**: Configuration management
 
-## 💬 Usage Examples
+## Usage Examples
 
 Once deployed, users can text your Twilio number:
 
@@ -140,7 +158,7 @@ Agent: "Current time: Tuesday, January 23, 2024 at 02:30 PM"
 - `status` - Check agent status
 - `info` - Agent information
 
-## 🔧 Configuration
+## Configuration
 
 ### Environment Variables
 
@@ -168,28 +186,41 @@ ANTHROPIC_API_KEY=...
 ANTHROPIC_MODEL=claude-3-haiku-20240307
 ```
 
-## 🧪 Local Development
+## Local Development
+
+For local testing and development:
 
 ```bash
 # Set LOCAL_DEVELOPMENT=true in .env
 LOCAL_DEVELOPMENT=true
+DEBUG_MODE=true
+
+# Install development dependencies
+pip install -r requirements.txt
 
 # Run locally
 python main.py
 
-# Test with ngrok
+# In another terminal, expose local server using ngrok
 ngrok http 8080
-# Use ngrok URL for Twilio webhook testing
+# Use the ngrok HTTPS URL for Twilio webhook testing
 ```
 
-## 🔒 Security Features
+**Local Development Workflow:**
+1. Set `LOCAL_DEVELOPMENT=true` in your `.env` file
+2. Run the application locally with `python main.py`
+3. Use ngrok to create a public tunnel to your local server
+4. Update your Twilio webhook to point to the ngrok URL
+5. Test by sending SMS messages to your Twilio number
+
+## Security Features
 
 - **Webhook Validation**: Verifies requests come from Twilio
 - **Rate Limiting**: Prevents abuse (5 messages/minute, 50/hour per user)
 - **Input Sanitization**: Cleans user input
 - **Error Handling**: Graceful failure modes
 
-## 📊 Monitoring
+## Monitoring
 
 ### Logs
 ```bash
@@ -206,7 +237,7 @@ gcloud functions logs tail sms-ai-agent
 - Memory usage
 - Conversation statistics
 
-## 🛠️ Development
+## Development
 
 ### Adding New Tools
 
@@ -228,17 +259,23 @@ class MyCustomTool(BaseTool):
 tools.append(MyCustomTool())
 ```
 
-### Testing
+### Running Tests
 
 ```bash
-# Run tests
+# Run all tests
 pytest tests/
+
+# Run tests with verbose output
+pytest tests/ -v
 
 # Test specific component
 pytest tests/test_agent.py -v
+
+# Run tests with coverage
+pytest tests/ --cov=src --cov-report=html
 ```
 
-## 📚 API Documentation
+## API Documentation
 
 ### Health Check
 ```
@@ -254,7 +291,7 @@ Body: Twilio webhook data
 Response: TwiML XML
 ```
 
-## 🚨 Troubleshooting
+## Troubleshooting
 
 ### Common Issues
 
@@ -269,21 +306,21 @@ DEBUG_MODE=true
 LOG_LEVEL=DEBUG
 ```
 
-## 💰 Cost Optimization
+## Cost Optimization
 
 - **Function scaling**: Adjust min/max instances
 - **Memory allocation**: Start with 512MB, adjust as needed
 - **LLM usage**: Monitor token consumption
 - **Firestore**: Regular cleanup of old conversations
 
-## 📈 Scaling Considerations
+## Scaling Considerations
 
 - **Auto-scaling**: Configured for 0-100 instances
 - **Rate limiting**: Adjust based on usage patterns
 - **Memory management**: Conversation windowing
 - **Database optimization**: Firestore indexing
 
-## 🤝 Contributing
+## Contributing
 
 1. Fork the repository
 2. Create a feature branch
@@ -291,11 +328,11 @@ LOG_LEVEL=DEBUG
 4. Add tests
 5. Submit a pull request
 
-## 📄 License
+## License
 
 MIT License - see LICENSE file for details
 
-## 🆘 Support
+## Support
 
 For issues and questions:
 1. Check the troubleshooting section
